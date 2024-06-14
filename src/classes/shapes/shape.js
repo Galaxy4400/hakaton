@@ -2,17 +2,9 @@ import { random, randomColor } from "../../utils.js";
 
 export class Shape {
 	constructor(properties) {
-		console.log(properties.width);
-		if (isNaN(properties.width)) {
-			throw new Error('Please specify "width" param');
-		}
-		if (isNaN(properties.height)) {
-			throw new Error('Please specify "height" param');
-		}
-
 		const defaultProperties = {
-			width: null,
-			height: null,
+			width: random(50, 500),
+			height: random(50, 500),
 			color: randomColor(),
 			rotate: random(0, 360),
 			x: random(0, window.innerWidth),
@@ -20,6 +12,8 @@ export class Shape {
 		};
 
 		this.properties = { ...defaultProperties, ...properties };
+
+		this.$element = document.createElement('div');
 	}
 
 	draw() {

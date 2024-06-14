@@ -2,10 +2,8 @@ import { Shape } from "./shape.js";
 
 export class Elips extends Shape {
 	draw() {
-		const elips = document.createElement('div');
+		this.$element.style.cssText = [ this.getCssText, `border-radius: 50%`].join(';');
 
-		elips.style.cssText = [ this.getCssText, `border-radius: 50%`].join(';');
-
-		document.body.append(elips);
+		document.body.append(this.$element);
 	}
 }

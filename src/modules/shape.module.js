@@ -15,17 +15,11 @@ export class ShapeModule extends Module {
 
 		switch (random(1, 3)) {
 			case 1: {
-				figure = new Rectangle({
-					width: random(50, 500), 
-					height: random(50, 500),
-				});
+				figure = new Rectangle();
 				break;
 			}
 			case 2: {
-				figure = new Elips({
-					width: random(50, 500), 
-					height: random(50, 500),
-				});
+				figure = new Elips();
 				break;
 			}
 			case 3: {

@@ -2,10 +2,8 @@ import { Shape } from "./shape.js";
 
 export class Rectangle extends Shape {
 	draw() {
-		const rectangle = document.createElement('div');
+		this.$element.style.cssText = this.getCssText;
 
-		rectangle.style.cssText = this.getCssText;
-
-		document.body.append(rectangle);
+		document.body.append(this.$element);
 	}
 }
