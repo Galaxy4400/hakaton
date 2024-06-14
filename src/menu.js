@@ -51,6 +51,14 @@ export class ContextMenu extends Menu {
 
 	add(module) {
 		this.$element.insertAdjacentHTML('beforeend', module.toHTML());
+
+		const $module = this.$element.lastElementChild;
+		
+		$module.addEventListener('click', () => {
+			module.trigger();
+			
+			this.close();
+		});
 	}
 
 
