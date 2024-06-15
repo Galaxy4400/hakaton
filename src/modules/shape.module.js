@@ -18,10 +18,12 @@ export class ShapeModule extends Module {
 				figure = new Rectangle();
 				break;
 			}
+
 			case 2: {
 				figure = new Elips();
 				break;
 			}
+			
 			case 3: {
 				figure = new Triangle({
 					width: 0, 
