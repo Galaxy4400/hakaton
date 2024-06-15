@@ -2,7 +2,9 @@ import { Menu } from './core/menu'
 import { BackgroundModule } from './modules/background.module.js';
 import { ClicksModule } from './modules/clicks.module.js';
 import { ShapeModule } from './modules/shape.module.js';
-import {MessageModule} from "@/modules/message.module";
+import { MessageModule } from "./modules/message.module.js";
+import { SoundModule } from './modules/sound.module.js';
+
 
 export class ContextMenu extends Menu {
 	#modules;
@@ -15,6 +17,7 @@ export class ContextMenu extends Menu {
 			new ClicksModule(),
 			new ShapeModule(),
 			new MessageModule(),
+			new SoundModule(),
 		];
 
 		this.init();

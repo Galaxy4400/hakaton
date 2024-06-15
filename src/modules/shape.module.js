@@ -8,6 +8,8 @@ import { Triangle } from '../classes/shapes/triangle.js';
 export class ShapeModule extends Module {
 	constructor() {
 		super('shape', 'Создать случайную фигуру');
+
+		this.shapes = [];
 	}
 
 	trigger() {
@@ -34,6 +36,11 @@ export class ShapeModule extends Module {
 			}
 		}
 
-		figure.draw();
+		this.shapes.push(figure.draw());
+	}
+
+
+	remove() {
+		this.shapes.forEach(shape => shape.remove());
 	}
 }
