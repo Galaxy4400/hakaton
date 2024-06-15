@@ -40,3 +40,9 @@ body {
 .menu .menu-item:hover {
     background: #343434;
 }
+
+.random-phrase-paragraph {
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px
+}

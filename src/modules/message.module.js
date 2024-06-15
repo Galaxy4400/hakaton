@@ -23,6 +23,7 @@ export class MessageModule extends Module {
         const numOfPhrases = this.messages.length;
         const phrase = this.messages[random(0, numOfPhrases - 1)];
         const phraseElement = document.createElement("p");
+        phraseElement.className = "random-phrase-paragraph"
         phraseElement.innerText = phrase;
         document.querySelector("body").append(phraseElement);
         setTimeout(() => {
