@@ -1,44 +1,75 @@
-import { Timer } from '../classes/timer/timer';
-import { Module } from '../core/module';
-import { randomColor } from '../utils';
+import { Module } from '../core/module.js';
+import { randomColor } from '../utils.js';
+
 
 export class ClicksModule extends Module {
 	constructor() {
 		super('clicks', 'Посчитать клики (за 5 секунд)');
 
-		this.time = 5;
+		this.countingTime = 5000;
+
+		this.initActions();
 	}
 
-	trigger() {
-		let click = -1;
-		let time = this.time;
-		const timer = new Timer(time);
+	reset() {
+		this.single = 0;
+		this.double = 0;
+		this.isCounting = false;
+	}
 
-		const startCheck = setInterval(() => {
-			--time;
 
-			if (time === 0) {
-				clearInterval(startCheck);
-				this.showScoreMessage(click);
-			}
-		}, 1000);
+	initActions() {
+		document.addEventListener('mouseup', () => {
+			if (!this.isCounting) return;
 
-		document.body.addEventListener('click', () => {
-			++click;
-			startCheck;
+			this.single++;
+		});
+		
+		document.addEventListener('dblclick', () => {
+			if (!this.isCounting) return;
+
+			this.single -= 2;
+			this.double++;
 		});
 	}
 
-	showScoreMessage(score) {
-		const $scoreMessage = document.createElement('p');
-		$scoreMessage.className = 'score-message';
-		$scoreMessage.textContent = `Time is up, your score is ${score}!`;
-		$scoreMessage.style.background = randomColor();
 
-		document.body.appendChild($scoreMessage);
+	trigger() {
+		this.reset();
+
+		this.isCounting = true;
+
+		setTimeout(() => { 
+			this.isCounting = false;
+			this.showMessage();
+		}, this.countingTime);
+	}
+
+
+	stop() {
+		this.showMessage();
+		this.reset();
+	}
+
+
+	// TODO: Replace on MessageModul
+	createMessage() {
+		const $message = document.createElement('p');
+		$message.className = 'score-message';
+		$message.innerHTML = `Одинарные клики: <b>${this.single}</b><br>Двойные клики: <b>${this.double}</b><br>`;
+		$message.style.background = randomColor();
+
+		return $message;
+	}
+
+
+	showMessage() {
+		const $message = this.createMessage();
+
+		document.body.append($message);
 
 		setTimeout(() => {
-			$scoreMessage.remove();
+			$message.remove();
 		}, 3000);
 	}
 }
