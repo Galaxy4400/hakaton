@@ -1,19 +1,23 @@
+import { Timer } from '../classes/timer/timer';
 import { Module } from '../core/module';
 import { randomColor } from '../utils';
 
 export class ClicksModule extends Module {
 	constructor() {
 		super('clicks', 'Посчитать клики (за 5 секунд)');
+
+		this.time = 5;
 	}
 
 	trigger() {
-		let timer = 5;
 		let click = -1;
+		let time = this.time;
+		const timer = new Timer(time);
 
 		const startCheck = setInterval(() => {
-			--timer;
+			--time;
 
-			if (timer === 0) {
+			if (time === 0) {
 				clearInterval(startCheck);
 				this.showScoreMessage(click);
 			}
@@ -26,15 +30,15 @@ export class ClicksModule extends Module {
 	}
 
 	showScoreMessage(score) {
-		const scoreMessage = document.createElement('p');
-		scoreMessage.className = 'score-message';
-		scoreMessage.textContent = `Time is up, your score is ${score}!`;
-		scoreMessage.style.background = randomColor();
+		const $scoreMessage = document.createElement('p');
+		$scoreMessage.className = 'score-message';
+		$scoreMessage.textContent = `Time is up, your score is ${score}!`;
+		$scoreMessage.style.background = randomColor();
 
-		document.body.appendChild(scoreMessage);
+		document.body.appendChild($scoreMessage);
 
 		setTimeout(() => {
-			scoreMessage.remove();
+			$scoreMessage.remove();
 		}, 3000);
 	}
 }
