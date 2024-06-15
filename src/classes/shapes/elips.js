@@ -5,5 +5,7 @@ export class Elips extends Shape {
 		this.$element.style.cssText = [ this.getCssText, `border-radius: 50%`].join(';');
 
 		document.body.append(this.$element);
+
+		return this.$element;
 	}
 }

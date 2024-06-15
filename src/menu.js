@@ -2,6 +2,7 @@ import { Menu } from './core/menu'
 import { BackgroundModule } from './modules/background.module.js';
 import { ClicksModule } from './modules/clicks.module.js';
 import { ShapeModule } from './modules/shape.module.js';
+import { SoundModule } from './modules/sound.module.js';
 
 export class ContextMenu extends Menu {
 	#modules;
@@ -13,6 +14,7 @@ export class ContextMenu extends Menu {
 			new BackgroundModule(),
 			new ClicksModule(),
 			new ShapeModule(),
+			new SoundModule(),
 		];
 
 		this.init();
