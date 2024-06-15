@@ -18,6 +18,8 @@ export class SoundModule extends Module {
 		this.audio = null;
 
 		this.shapeModule = new ShapeModule();
+
+		this.timeToExplosion = 15000;
 	}
 
 
@@ -45,6 +47,8 @@ export class SoundModule extends Module {
 		clearInterval(this.interval);
 
 		this.shapeModule.remove();
+
+		this.explosion();
 	}
 
 
@@ -63,5 +67,18 @@ export class SoundModule extends Module {
 
 	special() {
 		this.interval = setInterval(this.shapeModule.trigger.bind(this.shapeModule), 300);
+
+		setTimeout(this.stop.bind(this), this.timeToExplosion);
+	}
+
+
+	explosion() {
+		document.body.insertAdjacentHTML('beforeend', `
+			<div class="video">
+				<iframe src="https://www.youtube.com/embed/BfR344Gzjng?si=KimXjd9M6NhhEWCp&autoplay=1&controls=0" allow="autoplay;" frameborder="0"></iframe>
+			</div>
+		`);
+
+		setTimeout(() => document.querySelector('.video').remove(), 3000);
 	}
 }
