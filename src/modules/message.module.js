@@ -20,5 +20,13 @@ export class MessageModule extends Module {
 	}
 
 	trigger() {
+        const numOfPhrases = this.messages.length;
+        const phrase = this.messages[random(0, numOfPhrases - 1)];
+        const phraseElement = document.createElement("p");
+        phraseElement.innerText = phrase;
+        document.querySelector("body").append(phraseElement);
+        setTimeout(() => {
+            phraseElement.remove();
+        }, 5000)
 	}
 }
