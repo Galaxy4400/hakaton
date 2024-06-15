@@ -35,6 +35,10 @@ body {
     cursor: pointer;
     transition: background-color .2s ease-in;
     border-radius: inherit;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 5px;
 }
 
 .menu .menu-item:hover {
