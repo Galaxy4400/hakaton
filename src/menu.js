@@ -17,8 +17,8 @@ export class ContextMenu extends Menu {
       new ClicksModule(),
       new ShapeModule(),
       new MessageModule(),
-      new SoundModule(),
       new TimerModule(),
+      new SoundModule(),
     ];
 
     this.init();

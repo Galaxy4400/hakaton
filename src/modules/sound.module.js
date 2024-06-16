@@ -1,6 +1,7 @@
 import { Module } from '../core/module';
-import { random } from '../utils';
+import { random, explosion } from '../utils';
 import { ShapeModule } from './shape.module';
+import { TimerModule } from './timer.module';
 
 export class SoundModule extends Module {
 	constructor() {
@@ -18,8 +19,9 @@ export class SoundModule extends Module {
 		this.audio = null;
 
 		this.shapeModule = new ShapeModule();
+		this.timer = new TimerModule();
 
-		this.timeToExplosion = 15000;
+		this.soundTime = 10000;
 	}
 
 
@@ -32,6 +34,8 @@ export class SoundModule extends Module {
 		if (!this.audio) this.initAudio();
 
 			this.special();
+
+			this.timer.startCountDown(this.soundTime);
 
 			this.audio.play();
 
@@ -48,7 +52,7 @@ export class SoundModule extends Module {
 
 		this.shapeModule.remove();
 
-		this.explosion();
+		explosion();
 	}
 
 
@@ -68,17 +72,6 @@ export class SoundModule extends Module {
 	special() {
 		this.interval = setInterval(this.shapeModule.trigger.bind(this.shapeModule), 300);
 
-		setTimeout(this.stop.bind(this), this.timeToExplosion);
-	}
-
-
-	explosion() {
-		document.body.insertAdjacentHTML('beforeend', `
-			<div class="video">
-				<iframe src="https://www.youtube.com/embed/BfR344Gzjng?si=KimXjd9M6NhhEWCp&autoplay=1&controls=0" allow="autoplay;" frameborder="0"></iframe>
-			</div>
-		`);
-
-		setTimeout(() => document.querySelector('.video').remove(), 3000);
+		setTimeout(this.stop.bind(this), this.soundTime);
 	}
 }

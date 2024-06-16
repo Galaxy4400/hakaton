@@ -1,7 +1,6 @@
-import { Module } from "../core/module";
-import { SoundModule } from "./sound.module";
+import { Module } from "../core/module.js";
+import { explosion } from "../utils.js";
 
-const soundModuleInstance = new SoundModule();
 
 export class TimerModule extends Module {
   constructor() {
@@ -15,7 +14,7 @@ export class TimerModule extends Module {
   }
 
   // Метод обратного отсчета (применим для интегрирования)
-  startCountDown(ms) {
+  startCountDown(ms, isExplosion = false) {
     let timer = ms;
 
     const countDownEl = document.createElement("div");
@@ -36,7 +35,11 @@ export class TimerModule extends Module {
       }
       if (timer < 0) {
         clearInterval(timerId);
-        soundModuleInstance.explosion();
+
+				if (isExplosion) {
+					explosion();
+				}
+
         countDownEl.remove();
         return;
       }
@@ -185,7 +188,7 @@ export class TimerModule extends Module {
         Number(hoursSelector.value) +
         Number(minutesSelector.value) +
         Number(secondsSelector.value);
-      this.startCountDown(Number(finalValueMsTime));
+      this.startCountDown(Number(finalValueMsTime), true);
     });
 
     document.body.append(modalTimer);
