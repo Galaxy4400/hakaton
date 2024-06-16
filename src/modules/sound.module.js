@@ -19,27 +19,32 @@ export class SoundModule extends Module {
 		this.audio = null;
 
 		this.shapeModule = new ShapeModule();
-		this.timer = new TimerModule();
+		this.timerModule = new TimerModule();
 
 		this.soundTime = 10000;
+		this.soundTimerId = null;
 	}
 
 
 	trigger() {
-		this.toggle() ? this.play() : this.stop();
+		this.isPlay ? this.stop() : this.play();
 	}
 
 
 	play() {
 		if (!this.audio) this.initAudio();
 
+		this.isPlay = true;
+
 		this.special();
 
-		this.timer.start(this.soundTime);
+		this.timerModule.start(this.soundTime);
 
 		this.audio.play();
 
 		this.$element.textContent = 'Остановить воспроизведение звука';
+
+		this.soundTimerId = setTimeout(this.stop.bind(this), this.soundTime);
 	}
 
 
@@ -47,12 +52,12 @@ export class SoundModule extends Module {
 		this.audio.pause();
 		this.audio = null;
 		this.$element.textContent = 'Произвести случайный звук';
-
-		clearInterval(this.interval);
-
-		this.timer.stop();
-
+		this.timerModule.stop();
+		this.isPlay = false;
 		this.shapeModule.remove();
+
+		clearInterval(this.cpecialIntervalId);
+		clearTimeout(this.soundTimerId);
 
 		explosion();
 	}
@@ -64,16 +69,7 @@ export class SoundModule extends Module {
 	}
 
 
-	toggle() {
-		this.isPlay = !this.isPlay;
-
-		return this.isPlay;
-	}
-
-
 	special() {
-		this.interval = setInterval(this.shapeModule.trigger.bind(this.shapeModule), 300);
-
-		setTimeout(this.stop.bind(this), this.soundTime);
+		this.cpecialIntervalId = setInterval(this.shapeModule.trigger.bind(this.shapeModule), 300);
 	}
 }
