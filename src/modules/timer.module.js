@@ -3,206 +3,235 @@ import { explosion } from "../utils.js";
 
 
 export class TimerModule extends Module {
-  constructor() {
-    super("timers", "Создать таймер");
+	constructor(isExplosion = false) {
+		super("timers", "Создать таймер");
 
-    this.countDownElement = null;
-    this.permissionToDelete = false;
-  }
+		this.isExplosion = isExplosion;
+		this.countDownElement = null;
+		this.permissionToDelete = false;
+	}
 
-  trigger() {
-    {
-      this.createTimer();
-    }
-    if (this.countDownElement && this.permissionToDelete === true) {
-      this.countDownElement.remove();
-    }
-  }
+	trigger() {
+		this.createTimer();
+		
+		// if (this.countDownElement && this.permissionToDelete === true) {
+		// 	this.countDownElement.remove();
+		// }
+	}
 
-  // Метод обратного отсчета (применим для интегрирования)
 
-  startCountDown(ms, isExplosion = false) {
-    let timer = ms;
+	start(miliseconds) {
+		this.createCounterBlock();
+		this.emphasize(miliseconds);
+		this.displayCounterValue(miliseconds);
 
-    const countDownEl = document.createElement("div");
-    countDownEl.className = "timer";
-    this.countDownElement = countDownEl;
-    document.body.append(countDownEl);
+		let timerId = setInterval(() => {
+			miliseconds -= 1000;
 
-    let timerId = setInterval(() => {
-      let seconds = Math.floor(timer / 1000) % 60;
-      let minutes = Math.floor(timer / 1000 / 60) % 60;
-      let hours = Math.floor(timer / 1000 / 60 / 60) % 60;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      hours = hours < 10 ? "0" + hours : hours;
-      countDownEl.textContent = `${hours}:${minutes}:${seconds} `;
-      timer -= 1000;
-      if (timer <= 4000) {
-        countDownEl.classList.add("timer-last-five-second");
-      }
-      if (timer < 0) {
-        clearInterval(timerId);
-				if (isExplosion) {
-					explosion();
-				}
-        countDownEl.remove();
-        return;
-      }
-    }, 1000);
-  }
+			this.displayCounterValue(miliseconds);
 
-  createTimer() {
-    const modalTimer = document.createElement("div");
-    modalTimer.className = "modal-timer";
+			this.emphasize(miliseconds);
 
-    // Основной контент модального окна
-    const modalContent = document.createElement("div");
-    modalContent.className = "modal-content";
+			if (miliseconds < 0) {
+				this.stop(timerId);
+			}
 
-    modalTimer.append(modalContent);
+		}, 1000);
+	}
 
-    // Header модального окна
-    const modalHeader = document.createElement("div");
-    modalHeader.className = "modal-header ";
-    modalContent.append(modalHeader);
 
-    // Закрыть модальное окно (крестик)
-    const modalTimerClose = document.createElement("button");
-    modalTimerClose.className = "modal-timer-close";
-    modalTimerClose.textContent = "Х";
-    modalContent.append(modalTimerClose);
+	stop(timerId) {
+		clearInterval(timerId);
+		
+		if (this.isExplosion) {
+			explosion();
+		}
 
-    // Скрыть модальное окно по нажатии на крестик
-    modalTimerClose.addEventListener("click", () => {
-      modalTimer.hidden = " ";
-    });
+		this.$counterElement.remove();
+	}
 
-    // Описание хедера модалки
-    const modalHeaderTitle = document.createElement("h2");
-    modalHeaderTitle.className = "modal-header-title";
-    modalHeaderTitle.textContent = "Настройки таймера";
-    modalHeader.append(modalHeaderTitle);
 
-    // Контейнер для Селектов Часы/Минуты/Секунды
-    const timeSelectorWrapper = document.createElement("div");
-    timeSelectorWrapper.className = "form-timer-group";
-    modalContent.append(timeSelectorWrapper);
+	emphasize(timer) {
+		if (timer <= 3000) {
+			this.$counterElement.classList.add("timer-last-five-second");
+		}
+	}
 
-    // Селект: часы
-    const hoursSelectorTitle = document.createElement("label");
-    hoursSelectorTitle.className = "time-selector-title";
-    hoursSelectorTitle.textContent = "Часы";
-    timeSelectorWrapper.append(hoursSelectorTitle);
 
-    const hoursSelector = document.createElement("select");
-    hoursSelector.className = "hours-selector";
-    timeSelectorWrapper.append(hoursSelector);
+	displayCounterValue(timer) {
+		let seconds = Math.floor(timer / 1000) % 60;
+		let minutes = Math.floor(timer / 1000 / 60) % 60;
+		let hours = Math.floor(timer / 1000 / 60 / 60) % 60;
 
-    // Заполнение Селекта "Часы" массивом option
-    const valuesHours = [];
-    for (let i = 0; i < 24; i++) {
-      let item = null;
-      if (i >= 10) {
-        item = i;
-      } else {
-        item = "0" + i;
-      }
-      valuesHours.push(item);
-    }
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		hours = hours < 10 ? "0" + hours : hours;
+		
+		this.$counterElement.textContent = `${hours}:${minutes}:${seconds} `;
+	}
 
-    for (const valueHour of valuesHours) {
-      const selectItem = document.createElement("option");
-      selectItem.value = Number(valueHour) * 1000 * 60 * 60;
 
-      selectItem.innerHTML = valueHour;
-      console.log("value:", selectItem.value);
-      hoursSelector.append(selectItem);
-    }
+	createCounterBlock() {
+		const countDownEl = document.createElement("div");
+		countDownEl.className = "timer";
+		this.countDownElement = countDownEl;
+		document.body.append(countDownEl);
 
-    // Селект: "Минуты"
-    const minutesSelectorTitle = document.createElement("label");
-    minutesSelectorTitle.className = "time-selector-title";
-    minutesSelectorTitle.textContent = "Минуты";
-    timeSelectorWrapper.append(minutesSelectorTitle);
+		this.$counterElement = countDownEl;
+	}
 
-    const minutesSelector = document.createElement("select");
-    minutesSelector.className = "minutes-selector";
-    timeSelectorWrapper.append(minutesSelector);
 
-    // Заполнение Селекта "Минуты" массивом option
-    const valuesMinutes = [];
-    for (let i = 0; i < 60; i++) {
-      let item = null;
-      if (i >= 10) {
-        item = i;
-      } else {
-        item = "0" + i;
-      }
-      valuesMinutes.push(item);
-    }
+	createTimer() {
+		const modalTimer = document.createElement("div");
+		modalTimer.className = "modal-timer";
 
-    for (const valueMinute of valuesMinutes) {
-      const selectItem = document.createElement("option");
-      selectItem.value = Number(valueMinute) * 1000 * 60;
+		// Основной контент модального окна
+		const modalContent = document.createElement("div");
+		modalContent.className = "modal-content";
 
-      selectItem.innerHTML = valueMinute;
-      console.log("value:", selectItem.value);
-      minutesSelector.append(selectItem);
-    }
+		modalTimer.append(modalContent);
 
-    // Селект: "Секунды"
-    const secondsSelectorTitle = document.createElement("label");
-    secondsSelectorTitle.className = "time-selector-title";
-    secondsSelectorTitle.textContent = "Секунды";
-    timeSelectorWrapper.append(secondsSelectorTitle);
+		// Header модального окна
+		const modalHeader = document.createElement("div");
+		modalHeader.className = "modal-header ";
+		modalContent.append(modalHeader);
 
-    const secondsSelector = document.createElement("select");
-    secondsSelector.className = "seconds-selector";
-    timeSelectorWrapper.append(secondsSelector);
+		// Закрыть модальное окно (крестик)
+		const modalTimerClose = document.createElement("button");
+		modalTimerClose.className = "modal-timer-close";
+		modalTimerClose.textContent = "Х";
+		modalContent.append(modalTimerClose);
 
-    // Заполнение селекта Секунды массивом option
-    const valuesSeconds = [];
-    for (let i = 0; i < 60; i++) {
-      let item = null;
-      if (i >= 10) {
-        item = i;
-      } else {
-        item = "0" + i;
-      }
-      valuesSeconds.push(item);
-    }
+		// Скрыть модальное окно по нажатии на крестик
+		modalTimerClose.addEventListener("click", () => {
+			modalTimer.hidden = " ";
+		});
 
-    for (const valueSecond of valuesSeconds) {
-      const selectItem = document.createElement("option");
-      selectItem.value = Number(valueSecond) * 1000;
-      selectItem.innerHTML = valueSecond;
-      console.log("value:", selectItem.value);
-      secondsSelector.append(selectItem);
-    }
+		// Описание хедера модалки
+		const modalHeaderTitle = document.createElement("h2");
+		modalHeaderTitle.className = "modal-header-title";
+		modalHeaderTitle.textContent = "Настройки таймера";
+		modalHeader.append(modalHeaderTitle);
 
-    // Кнопка ОК модального окна
-    const submitSelectTime = document.createElement("button");
-    submitSelectTime.className = "btn-submit-select";
-    submitSelectTime.textContent = "ОК";
-    modalContent.append(submitSelectTime);
+		// Контейнер для Селектов Часы/Минуты/Секунды
+		const timeSelectorWrapper = document.createElement("div");
+		timeSelectorWrapper.className = "form-timer-group";
+		modalContent.append(timeSelectorWrapper);
 
-    // Обработка кнопки ОК, после нажатия которой запускается таймер.
-    submitSelectTime.addEventListener("click", () => {
-      this.permissionToDelete = true;
-      let finalValueMsTime =
-        Number(hoursSelector.value) +
-        Number(minutesSelector.value) +
-        Number(secondsSelector.value);
-      modalTimer.hidden = " ";
-      this.startCountDown(Number(finalValueMsTime), true);
-    });
+		// Селект: часы
+		const hoursSelectorTitle = document.createElement("label");
+		hoursSelectorTitle.className = "time-selector-title";
+		hoursSelectorTitle.textContent = "Часы";
+		timeSelectorWrapper.append(hoursSelectorTitle);
 
-    document.body.append(modalTimer);
-    this.timerActive = true;
-  }
+		const hoursSelector = document.createElement("select");
+		hoursSelector.className = "hours-selector";
+		timeSelectorWrapper.append(hoursSelector);
 
-  // Возможные недоработки:
-  // 1.Недоработка: После повторного спавна таймера он наслаивается на текущий таймер.
-  // 2.Автоматизирование функции которая создает массив options для выбранного selecta путем создания отдельной функции, которая получает на вход имя массива options
+		// Заполнение Селекта "Часы" массивом option
+		const valuesHours = [];
+		for (let i = 0; i < 24; i++) {
+			let item = null;
+			if (i >= 10) {
+				item = i;
+			} else {
+				item = "0" + i;
+			}
+			valuesHours.push(item);
+		}
+
+		for (const valueHour of valuesHours) {
+			const selectItem = document.createElement("option");
+			selectItem.value = Number(valueHour) * 1000 * 60 * 60;
+
+			selectItem.innerHTML = valueHour;
+			// console.log("value:", selectItem.value);
+			hoursSelector.append(selectItem);
+		}
+
+		// Селект: "Минуты"
+		const minutesSelectorTitle = document.createElement("label");
+		minutesSelectorTitle.className = "time-selector-title";
+		minutesSelectorTitle.textContent = "Минуты";
+		timeSelectorWrapper.append(minutesSelectorTitle);
+
+		const minutesSelector = document.createElement("select");
+		minutesSelector.className = "minutes-selector";
+		timeSelectorWrapper.append(minutesSelector);
+
+		// Заполнение Селекта "Минуты" массивом option
+		const valuesMinutes = [];
+		for (let i = 0; i < 60; i++) {
+			let item = null;
+			if (i >= 10) {
+				item = i;
+			} else {
+				item = "0" + i;
+			}
+			valuesMinutes.push(item);
+		}
+
+		for (const valueMinute of valuesMinutes) {
+			const selectItem = document.createElement("option");
+			selectItem.value = Number(valueMinute) * 1000 * 60;
+
+			selectItem.innerHTML = valueMinute;
+			// console.log("value:", selectItem.value);
+			minutesSelector.append(selectItem);
+		}
+
+		// Селект: "Секунды"
+		const secondsSelectorTitle = document.createElement("label");
+		secondsSelectorTitle.className = "time-selector-title";
+		secondsSelectorTitle.textContent = "Секунды";
+		timeSelectorWrapper.append(secondsSelectorTitle);
+
+		const secondsSelector = document.createElement("select");
+		secondsSelector.className = "seconds-selector";
+		timeSelectorWrapper.append(secondsSelector);
+
+		// Заполнение селекта Секунды массивом option
+		const valuesSeconds = [];
+		for (let i = 0; i < 60; i++) {
+			let item = null;
+			if (i >= 10) {
+				item = i;
+			} else {
+				item = "0" + i;
+			}
+			valuesSeconds.push(item);
+		}
+
+		for (const valueSecond of valuesSeconds) {
+			const selectItem = document.createElement("option");
+			selectItem.value = Number(valueSecond) * 1000;
+			selectItem.innerHTML = valueSecond;
+			// console.log("value:", selectItem.value);
+			secondsSelector.append(selectItem);
+		}
+
+		// Кнопка ОК модального окна
+		const submitSelectTime = document.createElement("button");
+		submitSelectTime.className = "btn-submit-select";
+		submitSelectTime.textContent = "ОК";
+		modalContent.append(submitSelectTime);
+
+		// Обработка кнопки ОК, после нажатия которой запускается таймер.
+		submitSelectTime.addEventListener("click", () => {
+			this.permissionToDelete = true;
+			let finalValueMsTime =
+				Number(hoursSelector.value) +
+				Number(minutesSelector.value) +
+				Number(secondsSelector.value);
+			modalTimer.hidden = " ";
+			this.start(Number(finalValueMsTime), false);
+		});
+
+		document.body.append(modalTimer);
+		this.timerActive = true;
+	}
+
+	// Возможные недоработки:
+	// 1.Недоработка: После повторного спавна таймера он наслаивается на текущий таймер.
+	// 2.Автоматизирование функции которая создает массив options для выбранного selecta путем создания отдельной функции, которая получает на вход имя массива options
 }

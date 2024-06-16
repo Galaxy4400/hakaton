@@ -35,7 +35,7 @@ export class SoundModule extends Module {
 
 			this.special();
 
-			this.timer.startCountDown(this.soundTime);
+			this.timer.start(this.soundTime);
 
 			this.audio.play();
 
