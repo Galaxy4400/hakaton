@@ -1,70 +1,50 @@
 import { Module } from '../core/module.js';
 import { randomColor } from '../utils.js';
 
-
 export class ClicksModule extends Module {
 	constructor() {
 		super('clicks', 'Посчитать клики (за 5 секунд)');
-
-		this.countingTime = 5000;
-
-		this.initActions();
+    
+		this.seconds = 5000;
+		this.handleActions();
 	}
 
 	reset() {
-		this.single = 0;
-		this.double = 0;
-		this.isCounting = false;
+		this.click = 0;
+		this.dblclick = 0;
+		this.isCounting = false;		
 	}
 
-
-	initActions() {
-		document.addEventListener('mouseup', () => {
+	handleActions() {
+		document.body.addEventListener('mousedown', () => {
 			if (!this.isCounting) return;
 
-			this.single++;
-		});
-		
-		document.addEventListener('dblclick', () => {
+			this.click++;
+		})
+
+		document.body.addEventListener('dblclick', () => {
 			if (!this.isCounting) return;
 
-			this.single -= 2;
-			this.double++;
-		});
+			this.click -= 2;
+			this.dblclick++;
+		})
 	}
-
 
 	trigger() {
 		this.reset();
-
 		this.isCounting = true;
 
-		setTimeout(() => { 
+		setTimeout(() => {
 			this.isCounting = false;
-			this.showMessage();
-		}, this.countingTime);
+			this.showScoreMessage();
+		}, this.seconds)
 	}
 
-
-	stop() {
-		this.showMessage();
-		this.reset();
-	}
-
-
-	// TODO: Replace on MessageModul
-	createMessage() {
-		const $message = document.createElement('p');
-		$message.className = 'score-message';
-		$message.innerHTML = `Одинарные клики: <b>${this.single}</b><br>Двойные клики: <b>${this.double}</b><br>`;
-		$message.style.background = randomColor();
-
-		return $message;
-	}
-
-
-	showMessage() {
-		const $message = this.createMessage();
+	showScoreMessage() {
+		const $scoreMessage = document.createElement('p');
+		$scoreMessage.className = 'score-message';
+		$scoreMessage.textContent = `Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`;
+		$scoreMessage.style.background = randomColor();
 
 		document.body.append($message);
 
