@@ -1,10 +1,10 @@
-import { Module } from '../core/module';
-import { randomColor } from '../utils';
+import { Module } from '../core/module.js';
+import { randomColor } from '../utils.js';
 
 export class ClicksModule extends Module {
 	constructor() {
 		super('clicks', 'Посчитать клики (за 5 секунд)');
-
+    
 		this.seconds = 5000;
 		this.handleActions();
 	}
@@ -46,10 +46,10 @@ export class ClicksModule extends Module {
 		$scoreMessage.textContent = `Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`;
 		$scoreMessage.style.background = randomColor();
 
-		document.body.appendChild($scoreMessage);
+		document.body.append($message);
 
 		setTimeout(() => {
-			$scoreMessage.remove();
+			$message.remove();
 		}, 3000);
 	}
 }

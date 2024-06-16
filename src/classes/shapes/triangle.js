@@ -11,5 +11,7 @@ export class Triangle extends Shape {
 		].join(';');
 
 		document.body.append(this.$element);
+
+		return this.$element;
 	}
 }
