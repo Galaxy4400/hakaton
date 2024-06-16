@@ -12,7 +12,7 @@ export class ClicksModule extends Module {
 	trigger() {
 		let click = -1;
 		let time = this.time;
-		const timer = new Timer(time);
+		// const timer = new Timer(time);
 
 		const startCheck = setInterval(() => {
 			--time;
