@@ -22,12 +22,19 @@ export class MessageModule extends Module {
 	trigger() {
         const numOfPhrases = this.messages.length;
         const phrase = this.messages[random(0, numOfPhrases - 1)];
+        const phraseContainer = document.createElement("div");
+        phraseContainer.className = "phrase-container";
         const phraseElement = document.createElement("p");
         phraseElement.className = "random-phrase-paragraph"
         phraseElement.innerText = phrase;
-        document.querySelector("body").append(phraseElement);
+        phraseContainer.append(phraseElement)
+        const possibleContainer = document.querySelector(".phrase-container");
+        if (possibleContainer) {
+            possibleContainer.remove();
+        }
+        document.querySelector("body").append(phraseContainer);
         setTimeout(() => {
-            phraseElement.remove();
+            phraseContainer.remove();
         }, 5000)
 	}
 }
