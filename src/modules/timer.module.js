@@ -9,6 +9,7 @@ export class TimerModule extends Module {
 		this.isExplosion = isExplosion;
 		this.countDownElement = null;
 		this.permissionToDelete = false;
+		this.timerId = null;
 	}
 
 	trigger() {
@@ -25,7 +26,7 @@ export class TimerModule extends Module {
 		this.emphasize(miliseconds);
 		this.displayCounterValue(miliseconds);
 
-		let timerId = setInterval(() => {
+		this.timerId = setInterval(() => {
 			miliseconds -= 1000;
 
 			this.displayCounterValue(miliseconds);
@@ -33,15 +34,15 @@ export class TimerModule extends Module {
 			this.emphasize(miliseconds);
 
 			if (miliseconds < 0) {
-				this.stop(timerId);
+				this.stop();
 			}
 
 		}, 1000);
 	}
 
 
-	stop(timerId) {
-		clearInterval(timerId);
+	stop() {
+		clearInterval(this.timerId);
 		
 		if (this.isExplosion) {
 			explosion();
@@ -66,7 +67,7 @@ export class TimerModule extends Module {
 		seconds = seconds < 10 ? "0" + seconds : seconds;
 		minutes = minutes < 10 ? "0" + minutes : minutes;
 		hours = hours < 10 ? "0" + hours : hours;
-		
+
 		this.$counterElement.textContent = `${hours}:${minutes}:${seconds} `;
 	}
 
