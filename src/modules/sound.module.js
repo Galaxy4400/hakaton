@@ -50,6 +50,8 @@ export class SoundModule extends Module {
 
 		clearInterval(this.interval);
 
+		this.timer.stop();
+
 		this.shapeModule.remove();
 
 		explosion();
