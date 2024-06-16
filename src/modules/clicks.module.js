@@ -46,7 +46,7 @@ export class ClicksModule extends Module {
 		$scoreMessage.textContent = `Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`;
 		$scoreMessage.style.background = randomColor();
 
-		document.body.append($message);
+		document.body.append($scoreMessage);
 
 		setTimeout(() => {
 			$scoreMessage.remove();
