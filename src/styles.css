@@ -168,7 +168,7 @@ body {
   position: absolute;
   right: 40px;
   bottom: 40px;
-  padding: 15px 25px;
+  padding: 10px 25px;
   font-size: 1rem;
   color: white;
   background-color: #4caf50;
@@ -180,6 +180,11 @@ body {
 
 .btn-submit-select:hover {
   background-color: gray;
+}
+
+.btn-submit-select.disabled {
+	pointer-events: none;
+	background-color: gray;
 }
 
 .timer-last-five-second {
