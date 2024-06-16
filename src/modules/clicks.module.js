@@ -45,7 +45,7 @@ export class ClicksModule extends Module {
 
 		setTimeout(() => {
 			this.isCounting = false;
-			this.message.showMessage(`Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`);
+			this.message.showMessage(`Время вышло, ваши клики - ${this.click}, двойные клики - ${this.dblclick}!`);
 			this.$element.classList.remove('disable');
 		}, this.seconds)
 	}
