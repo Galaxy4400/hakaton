@@ -46,6 +46,7 @@ export class TimerModule extends Module {
 	stop() {
 		clearInterval(this.timerId);
 		this.$counterElement.remove();
+		this.timerStarted = false;
 	}
 
 
