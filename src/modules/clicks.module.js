@@ -1,4 +1,3 @@
-import { Timer } from '../classes/timer/timer';
 import { Module } from '../core/module';
 import { randomColor } from '../utils';
 
@@ -6,33 +5,45 @@ export class ClicksModule extends Module {
 	constructor() {
 		super('clicks', 'Посчитать клики (за 5 секунд)');
 
-		this.time = 5;
+		this.seconds = 5000;
+		this.handleActions();
+	}
+
+	reset() {
+		this.click = 0;
+		this.dblclick = 0;
+		this.isCounting = false;		
+	}
+
+	handleActions() {
+		document.body.addEventListener('mousedown', () => {
+			if (!this.isCounting) return;
+
+			this.click++;
+		})
+
+		document.body.addEventListener('dblclick', () => {
+			if (!this.isCounting) return;
+
+			this.click -= 2;
+			this.dblclick++;
+		})
 	}
 
 	trigger() {
-		let click = -1;
-		let time = this.time;
-		// const timer = new Timer(time);
+		this.reset();
+		this.isCounting = true;
 
-		const startCheck = setInterval(() => {
-			--time;
-
-			if (time === 0) {
-				clearInterval(startCheck);
-				this.showScoreMessage(click);
-			}
-		}, 1000);
-
-		document.body.addEventListener('click', () => {
-			++click;
-			startCheck;
-		});
+		setTimeout(() => {
+			this.isCounting = false;
+			this.showScoreMessage();
+		}, this.seconds)
 	}
 
-	showScoreMessage(score) {
+	showScoreMessage() {
 		const $scoreMessage = document.createElement('p');
 		$scoreMessage.className = 'score-message';
-		$scoreMessage.textContent = `Time is up, your score is ${score}!`;
+		$scoreMessage.textContent = `Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`;
 		$scoreMessage.style.background = randomColor();
 
 		document.body.appendChild($scoreMessage);
