@@ -21,8 +21,12 @@ npm i
 npm start
 ```
 Или просто изучить функционал опытным путем:
-[Ссылка](http://localhost:3000/)
+[Ссылка](https://galaxy4400.github.io/hakaton/dist)
 
 ## Принимали участие
 
-[Olya Mosienko](https://github.com/OlyaMosienko) [Moiseev Evgeny](https://github.com/Galaxy4400) [Aram Avakyan](https://github.com/champlu25) [Денис Сабаев](https://github.com/mc2019a) [Дмитрий Башлачев](https://github.com/DmitryBashlachev)
+- [Olya Mosienko](https://github.com/OlyaMosienko) тимлид, разрабатывала фичу "Аналитика кликов"
+- [Moiseev Evgeny](https://github.com/Galaxy4400) разрабатывал логику меню, фичи "Генератор случайных фигур" и "Случайные звуки"
+- [Aram Avakyan](https://github.com/champlu25) разрабатывал фичу "Таймер отсчета"
+- [Денис Сабаев](https://github.com/mc2019a) разрабатывал фичу "Рандомный факт"
+- [Дмитрий Башлачев](https://github.com/DmitryBashlachev) разрабатывал фичу "Рандомный цвет страницы"
