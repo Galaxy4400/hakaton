@@ -1,5 +1,6 @@
 import { Module } from '../core/module.js';
-import { randomColor } from '../utils.js';
+import { MessageModule } from './message.module.js';
+import { TimerModule } from './timer.module.js';
 
 export class ClicksModule extends Module {
 	constructor() {
@@ -7,6 +8,9 @@ export class ClicksModule extends Module {
     
 		this.seconds = 5000;
 		this.handleActions();
+
+		this.timer = new TimerModule();
+		this.message = new MessageModule();
 	}
 
 	reset() {
@@ -31,25 +35,18 @@ export class ClicksModule extends Module {
 	}
 
 	trigger() {
+		if (this.isCounting) return;
+		this.$element.classList.add('disable');
+
+		this.timer.startCountDown(this.seconds);
+
 		this.reset();
 		this.isCounting = true;
 
 		setTimeout(() => {
 			this.isCounting = false;
-			this.showScoreMessage();
+			this.message.showMessage(`Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`);
+			this.$element.classList.remove('disable');
 		}, this.seconds)
-	}
-
-	showScoreMessage() {
-		const $scoreMessage = document.createElement('p');
-		$scoreMessage.className = 'score-message';
-		$scoreMessage.textContent = `Time is up, your clicks - ${this.click}, double-clicks - ${this.dblclick}!`;
-		$scoreMessage.style.background = randomColor();
-
-		document.body.append($message);
-
-		setTimeout(() => {
-			$message.remove();
-		}, 3000);
 	}
 }

@@ -13,6 +13,7 @@ body {
   height: 100vh;
   width: 100%;
   padding: 2rem;
+  overflow: hidden;
 }
 
 .menu {
@@ -44,6 +45,10 @@ body {
 
 .menu .menu-item:hover {
   background: #343434;
+}
+
+.menu .menu-item.disable {
+    background: #777777;
 }
 
 .random-phrase-paragraph {

@@ -10,3 +10,13 @@ export function randomColor() {
   }
   return color;
 }
+
+export function explosion() {
+	document.body.insertAdjacentHTML('beforeend', `
+		<div class="video">
+			<iframe src="https://www.youtube.com/embed/BfR344Gzjng?si=KimXjd9M6NhhEWCp&autoplay=1&controls=0" allow="autoplay;" frameborder="0"></iframe>
+		</div>
+	`);
+
+	setTimeout(() => document.querySelector('.video').remove(), 3000);
+}
