@@ -49,7 +49,7 @@ export class ClicksModule extends Module {
 		document.body.append($message);
 
 		setTimeout(() => {
-			$message.remove();
+			$scoreMessage.remove();
 		}, 3000);
 	}
 }
