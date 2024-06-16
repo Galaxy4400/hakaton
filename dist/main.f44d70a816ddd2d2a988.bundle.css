@@ -1,0 +1,218 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.menu {
+  position: fixed;
+  z-index: 1000;
+  max-width: 250px;
+  background: #1b1a1a;
+  border-radius: 5px;
+  display: none;
+  list-style: none;
+}
+
+.menu.open {
+  display: block;
+}
+
+.menu .menu-item {
+  padding: 8px 10px;
+  font-size: 1rem;
+  color: #eee;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+  border-radius: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.menu .menu-item:hover {
+  background: #343434;
+}
+
+.menu .menu-item.disable {
+  background: #777777;
+}
+
+.random-phrase-paragraph {
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.phrase-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: darkgray;
+}
+
+.score-message {
+  font-size: 1.2rem;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+.modal-timer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.57);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 450px;
+  height: 650px;
+  transform: translate(-50%, -50%);
+  background-color: #eee;
+}
+
+.modal-header {
+  background-color: rgb(68, 144, 216);
+  width: 100%;
+  height: 15%;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-timer-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #3f3c3c;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.modal-timer-close:hover {
+  background-color: #cc0000;
+}
+
+.modal-header-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: #ffecec;
+}
+
+.form-timer-group {
+  display: flex;
+  column-gap: 20px;
+  justify-content: center;
+}
+
+.time-selector-title {
+  font-size: 15px;
+}
+
+.time-selector-title {
+  color: #111010;
+}
+
+.btn-submit-select {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-submit-select:hover {
+  background-color: gray;
+}
+
+.btn-submit-select.disabled {
+	pointer-events: none;
+	background-color: gray;
+}
+
+.timer-last-five-second {
+  color: red;
+}
+
+.timer {
+  position: absolute;
+  font-size: 30px;
+  z-index: 10;
+  bottom: 20px;
+  right: 20px;
+}
+
+.btn-stop-timer {
+  position: absolute;
+  left: 40px;
+  bottom: 38px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: white;
+  background-color: #be1d1d;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-stop-timer:hover {
+  background-color: gray;
+}
+
