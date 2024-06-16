@@ -5,5 +5,7 @@ export class Rectangle extends Shape {
 		this.$element.style.cssText = this.getCssText;
 
 		document.body.append(this.$element);
+
+		return this.$element;
 	}
 }
