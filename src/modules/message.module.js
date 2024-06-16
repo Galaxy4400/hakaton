@@ -34,7 +34,7 @@ export class MessageModule extends Module {
         }
         document.querySelector("body").append(phraseContainer);
         setTimeout(() => {
-            phraseElement.remove();
+            phraseContainer.remove();
         }, 5000)
 	}
 }
