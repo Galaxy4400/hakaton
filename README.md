@@ -15,7 +15,7 @@
 
 ## Installation
 
-Можно клонировать репозиторий и ознакомиться с кодом ближе:
+Можно клонировать репозиторий и ознакомиться с кодом локально:
 ```sh
 npm i
 npm start
@@ -25,4 +25,4 @@ npm start
 
 ## Принимали участие
 
-[Имя/ник](http://localhost:3000/) [Имя/ник](http://localhost:3000/) [Имя/ник](http://localhost:3000/) [Имя/ник](http://localhost:3000/) [Имя/ник](http://localhost:3000/)
+[Olya Mosienko](https://github.com/OlyaMosienko) [Moiseev Evgeny](https://github.com/Galaxy4400) [Aram Avakyan](https://github.com/champlu25) [Денис Сабаев](https://github.com/mc2019a) [Дмитрий Башлачев](http://localhost:3000/)

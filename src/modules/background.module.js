@@ -7,7 +7,6 @@ export class BackgroundModule extends Module {
 	}
 
 	trigger() {
-		console.log('Отрисовка бекграунда');
 		document.body.style.backgroundColor = randomColor();
 	}
 }
