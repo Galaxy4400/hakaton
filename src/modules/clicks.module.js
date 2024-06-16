@@ -1,5 +1,6 @@
 import { Module } from '../core/module.js';
 import { randomColor } from '../utils.js';
+import { TimerModule } from './timer.module.js';
 
 export class ClicksModule extends Module {
 	constructor() {
@@ -7,6 +8,8 @@ export class ClicksModule extends Module {
     
 		this.seconds = 5000;
 		this.handleActions();
+
+		this.timer = new TimerModule();
 	}
 
 	reset() {
@@ -31,6 +34,8 @@ export class ClicksModule extends Module {
 	}
 
 	trigger() {
+		this.timer.startCountDown(this.seconds);
+
 		this.reset();
 		this.isCounting = true;
 
