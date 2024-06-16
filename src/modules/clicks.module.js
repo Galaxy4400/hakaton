@@ -38,7 +38,7 @@ export class ClicksModule extends Module {
 		if (this.isCounting) return;
 		this.$element.classList.add('disable');
 
-		this.timer.startCountDown(this.seconds);
+		this.timer.start(this.seconds);
 
 		this.reset();
 		this.isCounting = true;
