@@ -52,21 +52,20 @@ body {
 }
 
 .random-phrase-paragraph {
-    font-weight: bold;
-    font-size: 20px;
-    padding: 10px;
-
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px;
 }
 
 .phrase-container {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
-    padding: 10px;
-    border: 1px solid;
-    border-radius: 5px;
-    background-color: darkgray;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  background-color: darkgray;
 }
 
 .score-message {

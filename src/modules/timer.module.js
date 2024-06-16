@@ -5,20 +5,28 @@ import { explosion } from "../utils.js";
 export class TimerModule extends Module {
   constructor() {
     super("timers", "Создать таймер");
+
+    this.countDownElement = null;
+    this.permissionToDelete = false;
   }
 
   trigger() {
     {
       this.createTimer();
     }
+    if (this.countDownElement && this.permissionToDelete === true) {
+      this.countDownElement.remove();
+    }
   }
 
   // Метод обратного отсчета (применим для интегрирования)
+
   startCountDown(ms, isExplosion = false) {
     let timer = ms;
 
     const countDownEl = document.createElement("div");
     countDownEl.className = "timer";
+    this.countDownElement = countDownEl;
     document.body.append(countDownEl);
 
     let timerId = setInterval(() => {
@@ -35,11 +43,9 @@ export class TimerModule extends Module {
       }
       if (timer < 0) {
         clearInterval(timerId);
-
 				if (isExplosion) {
 					explosion();
 				}
-
         countDownEl.remove();
         return;
       }
@@ -183,15 +189,17 @@ export class TimerModule extends Module {
 
     // Обработка кнопки ОК, после нажатия которой запускается таймер.
     submitSelectTime.addEventListener("click", () => {
-      modalTimer.hidden = " ";
+      this.permissionToDelete = true;
       let finalValueMsTime =
         Number(hoursSelector.value) +
         Number(minutesSelector.value) +
         Number(secondsSelector.value);
+      modalTimer.hidden = " ";
       this.startCountDown(Number(finalValueMsTime), true);
     });
 
     document.body.append(modalTimer);
+    this.timerActive = true;
   }
 
   // Возможные недоработки:
