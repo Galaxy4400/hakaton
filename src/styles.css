@@ -47,6 +47,10 @@ body {
   background: #343434;
 }
 
+.menu .menu-item.disable {
+    background: #777777;
+}
+
 .random-phrase-paragraph {
     font-weight: bold;
     font-size: 20px;
