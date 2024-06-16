@@ -48,7 +48,7 @@ body {
 }
 
 .menu .menu-item.disable {
-    background: #777777;
+  background: #777777;
 }
 
 .random-phrase-paragraph {
@@ -192,4 +192,22 @@ body {
   z-index: 10;
   bottom: 20px;
   right: 20px;
+}
+
+.btn-stop-timer {
+  position: absolute;
+  left: 40px;
+  bottom: 38px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: white;
+  background-color: #be1d1d;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-stop-timer:hover {
+  background-color: gray;
 }
