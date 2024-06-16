@@ -33,13 +33,13 @@ export class SoundModule extends Module {
 	play() {
 		if (!this.audio) this.initAudio();
 
-			this.special();
+		this.special();
 
-			this.timer.start(this.soundTime);
+		this.timer.start(this.soundTime);
 
-			this.audio.play();
+		this.audio.play();
 
-			this.$element.textContent = 'Остановить воспроизведение звука';
+		this.$element.textContent = 'Остановить воспроизведение звука';
 	}
 
 
